@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MOVE ON | المتجر</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Arabic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="page">
+
+    <header>
+        <div class="logo"><span>MOVE</span><b>ON</b></div>
+
+        <nav aria-label="القائمة الرئيسية">
+            <a href="index.html">الرئيسية</a>
+            <a href="shop.html">المتجر</a>
+            <a href="cart.html" class="cart-link" aria-label="سلة التسوق">
+                السلة
+                <span id="cartCount" class="cart-count">0</span>
+            </a>
+            <a href="contact.html">تواصل</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="section">
+        <h1 style="font-size:48px;letter-spacing:4px">
+            مجموعة <span style="color:#f5c400">MOVE ON</span>
+        </h1>
+        <p style="margin-top:20px;opacity:.8">
+            اختار ستايلك وكمّل طريقك
+        </p>
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <section class="section" style="padding-top:0">
+        <div class="products-grid">
+
+            <!-- PRODUCT CARD -->
+            <div class="product-card">
+                <img src="images/hero.jpg" alt="تيشيرت MOVE ON">
+                <div class="product-info">
+                    <h3>تيشيرت MOVE ON</h3>
+                    <p class="price">450 جنيه</p>
+                    <a href="product.html" class="btn">عرض المنتج</a>
+                </div>
+            </div>
+
+            <!-- PRODUCT CARD -->
+            <div class="product-card">
+                <img src="images/hero.jpg" alt="هودي MOVE ON">
+                <div class="product-info">
+                    <h3>هودي MOVE ON</h3>
+                    <p class="price">750 جنيه</p>
+                    <a href="product.html" class="btn">عرض المنتج</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        © <span id="year"></span> MOVE ON
+    </footer>
+
+    <!-- Page Transition -->
+    <div id="page-transition"></div>
+
+    <!-- Global JS -->
+    <script src="assets/js/main.js"></script>
+
+    <!-- Footer Year -->
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+
+</html>

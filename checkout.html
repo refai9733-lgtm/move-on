@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MOVE ON | إتمام الطلب</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Arabic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="page">
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo"><span>MOVE</span><b>ON</b></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="shop.html">المتجر</a>
+            <a href="cart.html" class="cart-link">
+                السلة
+                <span id="cartCount" class="cart-count">0</span>
+            </a>
+            <a href="contact.html">تواصل</a>
+        </nav>
+    </header>
+
+    <!-- CHECKOUT -->
+    <section class="section checkout-page">
+        <h1>إتمام الطلب</h1>
+
+        <div class="checkout-grid">
+
+            <!-- FORM -->
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSebYZiNzN3fJj2f8L_XOAi_rwRCsz0zluz5uiWj-GUGAn4sgg/formResponse" method="POST" target="hidden_iframe" onsubmit="return submitOrder()">
+
+                <!-- بيانات العميل -->
+                <input type="text" name="entry.104733006" placeholder="الاسم بالكامل" required>
+                <input type="tel" name="entry.731607381" placeholder="رقم الموبايل" required>
+                <input type="text" name="entry.1769761032" placeholder="العنوان بالتفصيل" required>
+                <textarea name="entry.2111580264" placeholder="ملاحظات (اختياري)"></textarea>
+
+                <!-- بيانات المنتجات (مخفية - مربوطة بـ Google Form) -->
+                <input type="hidden" name="entry.1421078489" id="f_products">
+                <input type="hidden" name="entry.1012388853" id="f_sizes">
+                <input type="hidden" name="entry.252484593" id="f_colors">
+                <input type="hidden" name="entry.1238002565" id="f_quantities">
+                <input type="hidden" name="entry.1311412860" id="f_total">
+
+                <button class="btn" type="submit">تأكيد الطلب</button>
+
+                <button class="btn whatsapp-btn" type="button" onclick="orderWhatsApp()">
+                    اطلب عبر واتساب
+                </button>
+            </form>
+
+            <!-- SUMMARY -->
+            <div class="order-summary">
+                <h3>ملخص الطلب</h3>
+                <div id="orderItems"></div>
+
+                <p class="price">
+                    <strong>الإجمالي:</strong>
+                    <span id="sumTotal">0</span> جنيه
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        © <span id="year"></span> MOVE ON
+    </footer>
+
+    <!-- iframe مخفي لإرسال Google Form -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <!-- SCRIPT -->
+    <script>
+        /* ===============================
+                   جلب السلة
+                ================================ */
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        if (cart.length === 0) {
+            alert("السلة فارغة");
+            window.location.href = "shop.html";
+        }
+
+        /* ===============================
+           عرض ملخص الطلب
+        ================================ */
+        const itemsBox = document.getElementById("orderItems");
+        let total = 0;
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+
+            itemsBox.innerHTML += `
+                <div class="summary-item">
+                    <p><strong>${item.product}</strong></p>
+                    <p>المقاس: ${item.size} | اللون: ${item.color}</p>
+                    <p>العدد: ${item.qty}</p>
+                    <p>${itemTotal} جنيه</p>
+                    <hr>
+                </div>
+            `;
+        });
+
+        document.getElementById("sumTotal").textContent = total;
+
+        /* ===============================
+           تجهيز البيانات قبل الإرسال
+        ================================ */
+        function submitOrder() {
+            let products = "";
+            let sizes = "";
+            let colors = "";
+            let quantities = "";
+
+            cart.forEach(item => {
+                products += item.product + " | ";
+                sizes += item.size + " | ";
+                colors += item.color + " | ";
+                quantities += item.qty + " | ";
+            });
+
+            document.getElementById("f_products").value = products;
+            document.getElementById("f_sizes").value = sizes;
+            document.getElementById("f_colors").value = colors;
+            document.getElementById("f_quantities").value = quantities;
+            document.getElementById("f_total").value = total;
+
+            localStorage.removeItem("cart");
+
+            setTimeout(() => {
+                window.location.href = "success.html";
+            }, 600);
+
+            return true; // مهم جدًا
+        }
+
+        /* ===============================
+           الطلب عبر واتساب
+        ================================ */
+        function orderWhatsApp() {
+            let message = "طلب جديد من MOVE ON 👕🔥\n\n";
+
+            cart.forEach(item => {
+                message += `
+- ${item.product}
+  المقاس: ${item.size}
+  اللون: ${item.color}
+  العدد: ${item.qty}
+  السعر: ${item.price * item.qty} جنيه
+`;
+            });
+
+            message += `\nالإجمالي: ${total} جنيه`;
+
+            window.open(
+                "https://wa.me/201044373744?text=" + encodeURIComponent(message),
+                "_blank"
+            );
+        }
+
+        /* سنة الفوتر */
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+
+</html>
