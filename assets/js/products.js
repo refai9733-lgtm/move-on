@@ -1,1 +1,34 @@
+const PRODUCTS = [
+    {
+        id: "tshirt-moveon",
+        name: "تيشيرت MOVE ON",
+        price: 450,
+        description: "خامة تقيلة، قصة ستريت، وهوية واضحة",
+        images: {
+            "أسود": "assets/images/tshirt-black.jpg",
+            "أبيض": "assets/images/tshirt-white.jpg",
+            "موف": "assets/images/tshirt-purple.jpg"
+        },
+        stock: {
+            "أسود": { S: 5, M: 3, L: 0, XL: 2 },
+            "أبيض": { S: 2, M: 4, L: 6, XL: 1 },
+            "موف": { S: 1, M: 0, L: 3, XL: 0 }
+        }
+    },
+
+    {
+        id: "hoodie-moveon",
+        name: "هودي MOVE ON",
+        price: 750,
+        description: "هودي شتوي تقيل – مريح جدًا",
+        images: {
+            "أسود": "assets/images/hoodie-black.jpg",
+            "رمادي": "assets/images/hoodie-gray.jpg"
+        },
+        stock: {
+            "أسود": { M: 5, L: 2, XL: 1 },
+            "رمادي": { M: 3, L: 4, XL: 0 }
+        }
+    }
+];
 
