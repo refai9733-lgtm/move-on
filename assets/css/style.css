@@ -1,0 +1,837 @@
+/* ===============================
+   RESET & BASE
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: #0b0b0b;
+    color: #fff;
+    direction: rtl;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ===============================
+   HEADER
+================================ */
+
+header {
+    position: sticky;
+    top: 0;
+    height: 80px;
+    padding: 0 60px;
+    background: rgba(0, 0, 0, .85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #fff;
+}
+
+.logo b {
+    color: #f5c400;
+}
+
+nav a {
+    margin-right: 30px;
+    font-weight: 600;
+    position: relative;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #f5c400;
+    transition: .3s;
+}
+
+nav a:hover::after,
+nav a.active::after {
+    width: 100%;
+}
+
+nav a.active {
+    color: #f5c400;
+}
+
+
+/* ===============================
+   BUTTON
+================================ */
+
+.btn {
+    display: inline-block;
+    padding: 14px 42px;
+    border-radius: 40px;
+    background: #f5c400;
+    color: #000;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.btn:hover {
+    background: #fff;
+    transform: translateY(-4px);
+}
+
+
+/* ===============================
+   HERO (HOME)
+================================ */
+
+.hero {
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .6), rgba(0, 0, 0, .9)), url("../../images/hero.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 96px;
+    font-weight: 900;
+    letter-spacing: 6px;
+}
+
+.hero h1 span {
+    color: #f5c400;
+}
+
+.hero p {
+    margin: 30px 0 50px;
+    letter-spacing: 6px;
+    opacity: .85;
+}
+
+
+/* ===============================
+   SECTION
+================================ */
+
+.section {
+    padding: 120px 60px;
+    text-align: center;
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+footer {
+    padding: 30px;
+    text-align: center;
+    background: #000;
+    opacity: .6;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width:768px) {
+    header {
+        padding: 0 25px;
+    }
+    nav {
+        display: none;
+    }
+    .hero h1 {
+        font-size: 56px;
+    }
+}
+
+
+/* ===============================
+   SHOP PAGE
+================================ */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 50px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.product-card {
+    background: #111;
+    border-radius: 26px;
+    overflow: hidden;
+    transition: .4s;
+    position: relative;
+}
+
+.product-card img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    transition: .5s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.08);
+}
+
+.product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .6);
+}
+
+.product-info {
+    padding: 30px;
+    text-align: center;
+}
+
+.product-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.price {
+    color: #f5c400;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+
+/* ===============================
+   PRODUCT PAGE
+================================ */
+
+.product-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 28px;
+}
+
+.product-details h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.desc {
+    opacity: .85;
+    line-height: 1.9;
+    margin-bottom: 40px;
+}
+
+.option {
+    margin-bottom: 30px;
+}
+
+.option label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+select,
+input[type="number"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+}
+
+.colors {
+    display: flex;
+    gap: 15px;
+}
+
+.color {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: .3s;
+}
+
+.color.black {
+    background: #000;
+}
+
+.color.white {
+    background: #fff;
+}
+
+.color.purple {
+    background: #4b2f52;
+}
+
+.color.active {
+    border-color: #f5c400;
+    transform: scale(1.15);
+}
+
+
+/* Responsive */
+
+@media (max-width:900px) {
+    .product-page {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===============================
+   CHECKOUT PAGE
+================================ */
+
+.checkout-page {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 60px;
+}
+
+.checkout-page input,
+.checkout-page textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-family: 'Cairo', sans-serif;
+}
+
+.checkout-page textarea {
+    resize: none;
+    height: 120px;
+}
+
+.order-summary {
+    background: #111;
+    padding: 30px;
+    border-radius: 24px;
+}
+
+.order-summary h3 {
+    margin-bottom: 25px;
+}
+
+.order-summary p {
+    margin-bottom: 15px;
+    opacity: .9;
+}
+
+@media (max-width:900px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* WhatsApp Button */
+
+.whatsapp-btn {
+    background: #25D366;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.whatsapp-btn:hover {
+    background: #1ebe5d;
+}
+
+
+/* ===============================
+   SUCCESS PAGE
+================================ */
+
+.success-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.success-box {
+    background: #111;
+    padding: 60px 40px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 520px;
+    animation: fadeUp .8s ease forwards;
+}
+
+.check-icon {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    border-radius: 50%;
+    background: #f5c400;
+    color: #000;
+    font-size: 48px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.success-box h1 {
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.success-box p {
+    opacity: .85;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.success-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn.outline {
+    background: transparent;
+    color: #f5c400;
+    border: 2px solid #f5c400;
+}
+
+.btn.outline:hover {
+    background: #f5c400;
+    color: #000;
+}
+
+
+/* Animation reuse */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ===============================
+   CART PAGE
+================================ */
+
+.cart-page {
+    max-width: 900px;
+    margin: auto;
+}
+
+.cart-item {
+    background: #111;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.cart-item button {
+    background: transparent;
+    color: #f5c400;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-total {
+    margin-top: 40px;
+    text-align: center;
+}
+
+
+/* ===============================
+   CART COUNTER
+================================ */
+
+.cart-link {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    left: -12px;
+    background: #f5c400;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.color:active~.product-image img {
+    opacity: 0.8;
+}
+
+
+/* ===============================
+   CONTACT PAGE
+================================ */
+
+.contact-hero {
+    height: 60vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .6), rgba(0, 0, 0, .9)), url("../../images/hero.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.contact-hero h1 {
+    font-size: 60px;
+    letter-spacing: 4px;
+}
+
+.contact-hero span {
+    color: #f5c400;
+}
+
+.contact-page {
+    text-align: center;
+}
+
+.contact-text {
+    max-width: 650px;
+    margin: 0 auto 80px;
+    opacity: .85;
+    line-height: 1.9;
+}
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 40px;
+}
+
+.social-card {
+    background: #111;
+    padding: 35px 25px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    transition: .4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-card i {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #f5c400;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .6);
+}
+
+
+/* Platform glow */
+
+.facebook:hover {
+    box-shadow: 0 25px 60px rgba(24, 119, 242, .4);
+}
+
+.instagram:hover {
+    box-shadow: 0 25px 60px rgba(225, 48, 108, .4);
+}
+
+.whatsapp:hover {
+    box-shadow: 0 25px 60px rgba(37, 211, 102, .4);
+}
+
+.email:hover {
+    box-shadow: 0 25px 60px rgba(245, 196, 0, .4);
+}
+
+select option:disabled {
+    color: #999;
+    text-decoration: line-through;
+}
+
+
+/* ===============================
+   Page Load Animation
+================================ */
+
+.page {
+    animation: pageFade 0.8s ease forwards;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card,
+.product-image {
+    transition: 0.4s ease;
+}
+
+.card:hover,
+.product-image:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .6);
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, .25);
+    transform: translateX(-100%);
+    transition: 0.4s;
+}
+
+.btn:hover::after {
+    transform: translateX(0);
+}
+
+#page-transition {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+#page-transition.active {
+    opacity: 1;
+}
+
+.hero h1 span {
+    display: inline-block;
+    animation: glow 2.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #f5c400;
+    }
+    to {
+        text-shadow: 0 0 40px #f5c400;
+    }
+}
+
+.hero h1 {
+    font-size: 90px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.hero h1 span {
+    color: #f5c400;
+    text-shadow: 0 0 25px rgba(245, 196, 0, .6);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(245, 196, 0, .3);
+    }
+    to {
+        text-shadow: 0 0 30px rgba(245, 196, 0, .8);
+    }
+}
+
+#page-transition {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    animation: pageOut 1s ease forwards;
+}
+
+@keyframes pageOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.btn:hover {
+    box-shadow: 0 0 25px rgba(245, 196, 0, .7);
+}
+
+.hero-title {
+    font-size: 96px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    direction: ltr;
+    /* أهم سطر */
+}
+
+.hero-title .move {
+    color: #fff;
+}
+
+.hero-title .on {
+    color: #f5c400;
+    text-shadow: 0 0 20px rgba(245, 196, 0, .6);
+}
+
+
+/* موبايل */
+
+@media (max-width:768px) {
+    .hero-title {
+        font-size: 56px;
+    }
+}
+
+.logo-text {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 900;
+    font-size: 90px;
+    letter-spacing: 2px;
+    transform: skewX(-10deg);
+}
+
+
+/* MOVE */
+
+.logo-text .move {
+    color: #fff;
+}
+
+
+/* ON */
+
+.logo-text .on {
+    color: #f5c400;
+    margin-right: 5px;
+}
+
+
+/* السهم */
+
+.logo-text .arrow {
+    position: relative;
+    width: 70px;
+    height: 14px;
+    background: #f5c400;
+    margin: 0 10px;
+    border-radius: 4px;
+}
+
+.logo-text .arrow::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    top: -7px;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 20px solid #f5c400;
+}
+
+.hero .logo-text {
+    font-size: 110px;
+}
+
+.logo-text {
+    animation: slideIn 1.2s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-60px) skewX(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) skewX(-10deg);
+    }
+}
