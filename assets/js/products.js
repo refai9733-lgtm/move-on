@@ -5,9 +5,9 @@ const PRODUCTS = [
         price: 450,
         description: "خامة تقيلة، قصة ستريت، وهوية واضحة",
         images: {
-            "أسود": "images/tshirt-black.jpg",
-            "أبيض": "images/tshirt-white.jpg",
-            "موف": "images/tshirt-purple.jpg"
+            "أسود": "images/products/tshirt-black.jpg",
+            "أبيض": "images/products/tshirt-white.jpg",
+            "موف": "images/products/tshirt-purple.jpg"
         },
         stock: {
             "أسود": { S: 5, M: 3, L: 0, XL: 2 },
@@ -22,8 +22,8 @@ const PRODUCTS = [
         price: 750,
         description: "هودي شتوي تقيل – مريح جدًا",
         images: {
-            "أسود": "images/hoodie-black.jpg",
-            "رمادي": "images/hoodie-gray.jpg"
+            "أسود": "images/products/hoodie-black.jpg",
+            "رمادي": "images/products/hoodie-gray.jpg"
         },
         stock: {
             "أسود": { M: 5, L: 2, XL: 1 },
