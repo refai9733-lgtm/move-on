@@ -16,16 +16,40 @@
         .product-image img {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        
+
         select option:disabled {
             color: #999;
             text-decoration: line-through;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .thumbnails img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: .3s;
+        }
+
+        .thumbnails img.active,
+        .thumbnails img:hover {
+            opacity: 1;
+            border: 2px solid #f5c400;
         }
     </style>
 </head>
 
 <body class="page">
 
+    <!-- HEADER -->
     <header>
         <div class="logo"><span>MOVE</span><b>ON</b></div>
         <nav>
@@ -39,11 +63,13 @@
         </nav>
     </header>
 
+    <!-- PRODUCT -->
     <section class="section product-page">
 
         <!-- IMAGE -->
         <div class="product-image">
-            <img id="productImage" src="images/tshirt-black.jpg" alt="تيشيرت MOVE ON">
+            <img id="productImage" src="" alt="تيشيرت MOVE ON">
+            <div id="thumbnails" class="thumbnails"></div>
         </div>
 
         <!-- INFO -->
@@ -71,9 +97,9 @@
             <div class="option">
                 <label>اختر اللون</label>
                 <div class="colors">
-                    <div class="color black" data-color="أسود" data-img="images/tshirt-black.jpg"></div>
-                    <div class="color white" data-color="أبيض" data-img="images/tshirt-white.jpg"></div>
-                    <div class="color purple" data-color="موف" data-img="images/tshirt-purple.jpg"></div>
+                    <div class="color black" data-color="أسود"></div>
+                    <div class="color white" data-color="أبيض"></div>
+                    <div class="color purple" data-color="موف"></div>
                 </div>
             </div>
 
@@ -90,38 +116,42 @@
 
     <footer>© 2025 MOVE ON</footer>
 
-    <!-- Page Transition -->
     <div id="page-transition"></div>
 
     <script>
         /* ===============================
-                   مخزون المنتج
-                ================================ */
+           صور المنتج حسب اللون
+        ================================ */
+        const productImages = {
+            "أسود": [
+                "assets/images/tshirt/black-1.jpg",
+                "assets/images/tshirt/black-2.jpg",
+                "assets/images/tshirt/black-3.jpg"
+            ],
+            "أبيض": [
+                "assets/images/tshirt/white-1.jpg",
+                "assets/images/tshirt/white-2.jpg"
+            ],
+            "موف": [
+                "assets/images/tshirt/purple-1.jpg",
+                "assets/images/tshirt/purple-2.jpg"
+            ]
+        };
+
+        /* ===============================
+           مخزون المنتج
+        ================================ */
         const stock = {
-            "أسود": {
-                S: 5,
-                M: 3,
-                L: 0,
-                XL: 2
-            },
-            "أبيض": {
-                S: 0,
-                M: 4,
-                L: 6,
-                XL: 1
-            },
-            "موف": {
-                S: 2,
-                M: 0,
-                L: 3,
-                XL: 0
-            }
+            "أسود": { S: 5, M: 3, L: 0, XL: 2 },
+            "أبيض": { S: 0, M: 4, L: 6, XL: 1 },
+            "موف": { S: 2, M: 0, L: 3, XL: 0 }
         };
 
         let selectedColor = "";
         let selectedSize = "";
 
         const productImage = document.getElementById("productImage");
+        const thumbnailsBox = document.getElementById("thumbnails");
         const sizeSelect = document.getElementById("size");
         const qtyInput = document.getElementById("qty");
 
@@ -136,18 +166,41 @@
 
                 selectedColor = color.dataset.color;
 
-                productImage.style.opacity = 0;
-                setTimeout(() => {
-                    productImage.src = color.dataset.img;
-                    productImage.style.opacity = 1;
-                }, 150);
-
+                loadImagesForColor(selectedColor);
                 updateSizes();
             });
         });
 
         /* ===============================
-           تحديث المقاسات حسب المخزون
+           تحميل الصور حسب اللون
+        ================================ */
+        function loadImagesForColor(color) {
+            const images = productImages[color];
+            if (!images) return;
+
+            productImage.src = images[0];
+            thumbnailsBox.innerHTML = "";
+
+            images.forEach((img, index) => {
+                const thumb = document.createElement("img");
+                thumb.src = img;
+
+                if (index === 0) thumb.classList.add("active");
+
+                thumb.onclick = () => {
+                    document.querySelectorAll(".thumbnails img")
+                        .forEach(i => i.classList.remove("active"));
+
+                    thumb.classList.add("active");
+                    productImage.src = img;
+                };
+
+                thumbnailsBox.appendChild(thumb);
+            });
+        }
+
+        /* ===============================
+           تحديث المقاسات
         ================================ */
         function updateSizes() {
             sizeSelect.value = "";
@@ -157,29 +210,23 @@
                 if (!option.value) return;
 
                 const available = stock[selectedColor][option.value];
-
-                if (available > 0) {
-                    option.disabled = false;
-                    option.textContent = option.value;
-                } else {
-                    option.disabled = true;
-                    option.textContent = `${option.value} (غير متاح)`;
-                }
+                option.disabled = available <= 0;
+                option.textContent = available > 0
+                    ? option.value
+                    : `${option.value} (غير متاح)`;
             });
 
             qtyInput.value = 1;
         }
 
         /* ===============================
-           عند اختيار المقاس
+           اختيار المقاس
         ================================ */
         sizeSelect.addEventListener("change", () => {
             selectedSize = sizeSelect.value;
-
             if (!selectedColor || !selectedSize) return;
 
-            const maxQty = stock[selectedColor][selectedSize];
-            qtyInput.max = maxQty;
+            qtyInput.max = stock[selectedColor][selectedSize];
             qtyInput.value = 1;
         });
 
@@ -194,10 +241,8 @@
                 return;
             }
 
-            const available = stock[selectedColor][selectedSize];
-
-            if (qty > available) {
-                alert(`الكمية المتاحة فقط ${available}`);
+            if (qty > stock[selectedColor][selectedSize]) {
+                alert("الكمية غير متاحة");
                 return;
             }
 
@@ -209,7 +254,7 @@
                 qty: qty
             };
 
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
             cart.push(product);
             localStorage.setItem("cart", JSON.stringify(cart));
 
