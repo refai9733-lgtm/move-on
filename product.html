@@ -2,273 +2,249 @@
 <html lang="ar" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <title>MOVE ON | المنتج</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>MOVE ON | المنتج</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Arabic Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
-    <style>
-        .product-image img {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+    .thumbs img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
 
-        select option:disabled {
-            color: #999;
-            text-decoration: line-through;
-        }
+    .thumbs img:hover {
+      border-color: #f5c400;
+    }
 
-        .thumbnails {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            justify-content: center;
-        }
+    .colors .color {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
 
-        .thumbnails img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: .3s;
-        }
-
-        .thumbnails img.active,
-        .thumbnails img:hover {
-            opacity: 1;
-            border: 2px solid #f5c400;
-        }
-    </style>
+    .colors .active {
+      border-color: #f5c400;
+    }
+  </style>
 </head>
 
 <body class="page">
 
-    <!-- HEADER -->
-    <header>
-        <div class="logo"><span>MOVE</span><b>ON</b></div>
-        <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="shop.html">المتجر</a>
-            <a href="cart.html" class="cart-link">
-                السلة
-                <span id="cartCount" class="cart-count">0</span>
-            </a>
-            <a href="contact.html">تواصل</a>
-        </nav>
-    </header>
+<header>
+  <div class="logo"><span>MOVE</span><b>ON</b></div>
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="shop.html">المتجر</a>
+    <a href="cart.html">السلة</a>
+  </nav>
+</header>
 
-    <!-- PRODUCT -->
-    <section class="section product-page">
+<section class="section product-page">
 
-        <!-- IMAGE -->
-        <div class="product-image">
-            <img id="productImage" src="" alt="تيشيرت MOVE ON">
-            <div id="thumbnails" class="thumbnails"></div>
-        </div>
+  <div class="product-image">
+    <img id="productImage">
+    <div id="thumbnails" class="thumbs"></div>
+  </div>
 
-        <!-- INFO -->
-        <div class="product-details">
-            <h1>تيشيرت MOVE ON</h1>
-            <p class="price">450 جنيه</p>
+  <div class="product-details">
+    <h1 id="productName"></h1>
+    <p class="price" id="productPrice"></p>
+    <p class="desc" id="productDesc"></p>
 
-            <p class="desc">
-                خامة تقيلة، قصة ستريت، وهوية واضحة. MOVE ON مش مجرد لبس — دي عقلية.
-            </p>
+    <div class="option">
+      <label>المقاس</label>
+      <select id="size">
+        <option value="">اختر المقاس</option>
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+        <option>XL</option>
+      </select>
+    </div>
 
-            <!-- SIZE -->
-            <div class="option">
-                <label>اختر المقاس</label>
-                <select id="size">
-                    <option value="">اختر المقاس</option>
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
-                </select>
-            </div>
+    <div class="option">
+      <label>اللون</label>
+      <div class="colors" id="colorsBox"></div>
+    </div>
 
-            <!-- COLORS -->
-            <div class="option">
-                <label>اختر اللون</label>
-                <div class="colors">
-                    <div class="color black" data-color="أسود"></div>
-                    <div class="color white" data-color="أبيض"></div>
-                    <div class="color purple" data-color="موف"></div>
-                </div>
-            </div>
+    <div class="option">
+      <label>العدد</label>
+      <input type="number" id="qty" value="1" min="1">
+    </div>
 
-            <!-- QTY -->
-            <div class="option">
-                <label>العدد</label>
-                <input type="number" id="qty" value="1" min="1">
-            </div>
+    <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
+  </div>
 
-            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
-        </div>
+</section>
 
-    </section>
+<footer>© 2025 MOVE ON</footer>
 
-    <footer>© 2025 MOVE ON</footer>
+<script>
+/* ===============================
+   قاعدة بيانات المنتجات
+================================ */
+const products = {
+  tshirt: {
+    name: "تيشيرت MOVE ON",
+    price: 450,
+    desc: "خامة تقيلة، قصة ستريت، وهوية واضحة.",
+    colors: {
+      "أسود": {
+        hex: "#000",
+        images: [
+          "assets/images/tshirt/black-1.jpg",
+          "assets/images/tshirt/black-2.jpg"
+        ],
+        stock: { S: 5, M: 3, L: 0, XL: 2 }
+      },
+      "أبيض": {
+        hex: "#fff",
+        images: [
+          "assets/images/tshirt/white-1.jpg",
+          "assets/images/tshirt/white-2.jpg"
+        ],
+        stock: { S: 2, M: 4, L: 6, XL: 1 }
+      }
+    }
+  },
 
-    <div id="page-transition"></div>
+  hoodie: {
+    name: "هودي MOVE ON",
+    price: 750,
+    desc: "هودي شتوي تقيل – مريح وعملي.",
+    colors: {
+      "أسود": {
+        hex: "#000",
+        images: [
+          "assets/images/hoodie/black-1.jpg",
+          "assets/images/hoodie/black-2.jpg"
+        ],
+        stock: { S: 2, M: 4, L: 3, XL: 1 }
+      }
+    }
+  }
+};
 
-    <script>
-        /* ===============================
-           صور المنتج حسب اللون
-        ================================ */
-        const productImages = {
-            "أسود": [
-                "images/products/tshirt/1.jpeg",
-                "images/products/tshirt/2.jpeg"
-                
-            ],
-            "أبيض": [
-                "images/products/hoodie/3.jpg",
-                "images/products/hoodie/4.jpg"
-            ],
-            "موف": [
-                "assets/images/tshirt/purple-1.jpg",
-                "assets/images/tshirt/purple-2.jpg"
-            ]
-        };
+/* ===============================
+   تحميل المنتج
+================================ */
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
+const product = products[productId];
 
-        /* ===============================
-           مخزون المنتج
-        ================================ */
-        const stock = {
-            "أسود": { S: 5, M: 3, L: 0, XL: 2 },
-            "أبيض": { S: 0, M: 4, L: 6, XL: 1 },
-            "موف": { S: 2, M: 0, L: 3, XL: 0 }
-        };
+if (!product) {
+  alert("المنتج غير موجود");
+  location.href = "shop.html";
+}
 
-        let selectedColor = "";
-        let selectedSize = "";
+document.getElementById("productName").textContent = product.name;
+document.getElementById("productPrice").textContent = product.price + " جنيه";
+document.getElementById("productDesc").textContent = product.desc;
 
-        const productImage = document.getElementById("productImage");
-        const thumbnailsBox = document.getElementById("thumbnails");
-        const sizeSelect = document.getElementById("size");
-        const qtyInput = document.getElementById("qty");
+const imageBox = document.getElementById("productImage");
+const thumbsBox = document.getElementById("thumbnails");
+const colorsBox = document.getElementById("colorsBox");
+const sizeSelect = document.getElementById("size");
+const qtyInput = document.getElementById("qty");
 
-        /* ===============================
-           اختيار اللون
-        ================================ */
-        document.querySelectorAll(".color").forEach(color => {
-            color.addEventListener("click", () => {
+let selectedColor = "";
+let selectedSize = "";
 
-                document.querySelectorAll(".color").forEach(c => c.classList.remove("active"));
-                color.classList.add("active");
+/* ===============================
+   الألوان
+================================ */
+Object.keys(product.colors).forEach(color => {
+  const div = document.createElement("div");
+  div.className = "color";
+  div.style.background = product.colors[color].hex;
 
-                selectedColor = color.dataset.color;
+  div.onclick = () => {
+    document.querySelectorAll(".color").forEach(c => c.classList.remove("active"));
+    div.classList.add("active");
 
-                loadImagesForColor(selectedColor);
-                updateSizes();
-            });
-        });
+    selectedColor = color;
+    loadImages(color);
+    updateSizes();
+  };
 
-        /* ===============================
-           تحميل الصور حسب اللون
-        ================================ */
-        function loadImagesForColor(color) {
-            const images = productImages[color];
-            if (!images) return;
+  colorsBox.appendChild(div);
+});
 
-            productImage.src = images[0];
-            thumbnailsBox.innerHTML = "";
+/* ===============================
+   الصور
+================================ */
+function loadImages(color) {
+  const imgs = product.colors[color].images;
+  imageBox.src = imgs[0];
+  thumbsBox.innerHTML = "";
 
-            images.forEach((img, index) => {
-                const thumb = document.createElement("img");
-                thumb.src = img;
+  imgs.forEach(img => {
+    const t = document.createElement("img");
+    t.src = img;
+    t.onclick = () => imageBox.src = img;
+    thumbsBox.appendChild(t);
+  });
+}
 
-                if (index === 0) thumb.classList.add("active");
+/* ===============================
+   المقاسات
+================================ */
+function updateSizes() {
+  sizeSelect.value = "";
+  selectedSize = "";
 
-                thumb.onclick = () => {
-                    document.querySelectorAll(".thumbnails img")
-                        .forEach(i => i.classList.remove("active"));
+  Array.from(sizeSelect.options).forEach(o => {
+    if (!o.value) return;
+    const available = product.colors[selectedColor].stock[o.value];
+    o.disabled = available <= 0;
+  });
 
-                    thumb.classList.add("active");
-                    productImage.src = img;
-                };
+  qtyInput.value = 1;
+}
 
-                thumbnailsBox.appendChild(thumb);
-            });
-        }
+sizeSelect.onchange = () => {
+  selectedSize = sizeSelect.value;
+  qtyInput.max = product.colors[selectedColor].stock[selectedSize];
+};
 
-        /* ===============================
-           تحديث المقاسات
-        ================================ */
-        function updateSizes() {
-            sizeSelect.value = "";
-            selectedSize = "";
+/* ===============================
+   إضافة للسلة
+================================ */
+function addToCart() {
+  if (!selectedColor || !selectedSize) {
+    alert("اختار اللون والمقاس");
+    return;
+  }
 
-            Array.from(sizeSelect.options).forEach(option => {
-                if (!option.value) return;
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({
+    id: productId,
+    name: product.name,
+    price: product.price,
+    color: selectedColor,
+    size: selectedSize,
+    qty: Number(qtyInput.value)
+  });
 
-                const available = stock[selectedColor][option.value];
-                option.disabled = available <= 0;
-                option.textContent = available > 0
-                    ? option.value
-                    : `${option.value} (غير متاح)`;
-            });
-
-            qtyInput.value = 1;
-        }
-
-        /* ===============================
-           اختيار المقاس
-        ================================ */
-        sizeSelect.addEventListener("change", () => {
-            selectedSize = sizeSelect.value;
-            if (!selectedColor || !selectedSize) return;
-
-            qtyInput.max = stock[selectedColor][selectedSize];
-            qtyInput.value = 1;
-        });
-
-        /* ===============================
-           إضافة للسلة
-        ================================ */
-        function addToCart() {
-            const qty = Number(qtyInput.value);
-
-            if (!selectedColor || !selectedSize) {
-                alert("من فضلك اختر اللون والمقاس");
-                return;
-            }
-
-            if (qty > stock[selectedColor][selectedSize]) {
-                alert("الكمية غير متاحة");
-                return;
-            }
-
-            const product = {
-                product: "تيشيرت MOVE ON",
-                price: 450,
-                size: selectedSize,
-                color: selectedColor,
-                qty: qty
-            };
-
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.push(product);
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-            if (typeof updateCartCount === "function") {
-                updateCartCount();
-            }
-
-            window.location.href = "cart.html";
-        }
-    </script>
+  localStorage.setItem("cart", JSON.stringify(cart));
+  location.href = "cart.html";
+}
+</script>
 
 </body>
-
 </html>
-
-
-
